@@ -1,0 +1,5 @@
+notHashedValue : 1234
+
+oneHash :
+    valueOne: false
+    valueTwo: 'boxLab1'
