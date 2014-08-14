@@ -21,9 +21,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.host_name = "boxLab1"
 
         # Define one non-internal network for VM-Host communication
-        config.vm.network "private_network", ip: "192.168.56.3", virtualbox__intnet: "false"
+        config.vm.network "private_network", ip: "10.240.21.100", virtualbox__intnet: false
         # Define one internal network for inter-VM communication
-        config.vm.network "private_network", ip: "192.168.50.3", virtualbox__intnet: "true"
+        config.vm.network "private_network", ip: "192.168.50.3", virtualbox__intnet: true
 
         config.vm.provider :virtualbox do |vb|
             # increase memory to 1GB (base box is set to 480MB)
@@ -33,8 +33,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
 
         # Use shell provisionner to prepare Hiera configuration so that Puppet can find it on the first run
-#        config.vm.provision :shell, :inline => "ln -sf /vagrant/configuration/hiera-vagrantLab.yaml /etc/puppetlabs/puppet/hiera.yaml"
-
+        #config.vm.provision :shell, :inline => "ln -sf /vagrant/configuration/hiera-vagrantLab.yaml /etc/puppetlabs/puppet/hiera.yaml"
+        
+        # Use shell provisionner to make sure Ubuntu is up to date before provisioning
+        config.vm.provision :shell, :inline => "sudo apt-get update"
         # Enable provisioning with Puppet stand alone.
 
         config.vm.provision :puppet do |puppet|
