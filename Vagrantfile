@@ -73,7 +73,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
 
         # create hiera file in vagrant machine
-#        config.vm.provision :shell, :inline => "ln -sf /vagrant/configuration/hiera-vagrantLab.yaml /etc/puppetlabs/puppet/hiera.yaml"
+        #config.vm.provision :shell, :inline => "ln -sf /vagrant/configuration/hiera-vagrantLab.yaml /etc/puppetlabs/puppet/hiera.yaml"
+
+        # Use shell provisionner to make sure Ubuntu is up to date before provisioning
+        config.vm.provision :shell, :inline => "sudo apt-get update"
 
         # Enable provisioning with Puppet stand alone.
         config.vm.provision :puppet do |puppet|
