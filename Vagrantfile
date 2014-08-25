@@ -49,7 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
 
-    config.vm.define :boxLab2 do |config|
+    config.vm.define :cvMaker do |config|
 
         # Every Vagrant virtual environment requires a box to build off of.
         config.vm.box = "precise64"
@@ -58,7 +58,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # doesn't already exist on the user's system.
         #config.vm.box_url = ""
 
-        config.vm.host_name = "boxLab2"
+        config.vm.host_name = "cvMaker"
 
         # Define one non-internal network for VM-Host communication
         config.vm.network "private_network", ip: "192.168.56.4", virtualbox__intnet: false
@@ -67,19 +67,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         config.vm.provider :virtualbox do |vb|
             # increase memory to 1GB (base box is set to 480MB)
-            vb.customize ["modifyvm", :id, "--memory", 1024, "--cpus", 2]
+            vb.customize ["modifyvm", :id, "--memory", 512, "--cpus", 1]
             # Ensure that the NAT DNS resolving is handled by something... Upgrading VirtualBox sometime disable the option...
             vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         end
 
         # create hiera file in vagrant machine
-        config.vm.provision :shell, :inline => "ln -sf /vagrant/configuration/hiera-vagrantLab.yaml /etc/puppetlabs/puppet/hiera.yaml"
+#        config.vm.provision :shell, :inline => "ln -sf /vagrant/configuration/hiera-vagrantLab.yaml /etc/puppetlabs/puppet/hiera.yaml"
 
         # Enable provisioning with Puppet stand alone.
         config.vm.provision :puppet do |puppet|
             puppet.manifests_path = "manifests"
             puppet.module_path = "modules"
-            puppet.manifest_file  = "boxLab2.pp"
+            puppet.manifest_file  = "cvMaker.pp"
             puppet.facter = {
                 "vagrant_box" => true
             }

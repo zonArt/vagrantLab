@@ -10,3 +10,7 @@ mod 'stdlib',
 mod 'puppi',
     :git => 'git://github.com/example42/puppi.git'
 
+mod 'latex',
+    :git => 'git://github.com/zonArt/puppet-latex.git'
+
+
