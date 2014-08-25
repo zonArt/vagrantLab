@@ -52,11 +52,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define :cvMaker do |config|
 
         # Every Vagrant virtual environment requires a box to build off of.
-        config.vm.box = "precise64"
+        config.vm.box = "trusty64"
 
         # The url from where the 'config.vm.box' box will be fetched if it
         # doesn't already exist on the user's system.
-        #config.vm.box_url = ""
+        config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
         config.vm.host_name = "cvMaker"
 
@@ -67,7 +67,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         config.vm.provider :virtualbox do |vb|
             # increase memory to 1GB (base box is set to 480MB)
-            vb.customize ["modifyvm", :id, "--memory", 512, "--cpus", 1]
+            vb.customize ["modifyvm", :id, "--memory", 1024, "--cpus", 2]
             # Ensure that the NAT DNS resolving is handled by something... Upgrading VirtualBox sometime disable the option...
             vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         end
