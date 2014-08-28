@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             puppet.module_path = "modules"
             puppet.manifest_file  = "boxLab1.pp"
             puppet.facter = {
-                "vagrant_box" => true
+                "fqdn" => 'boxlab1.vagrant.box'
             }
         end
     end
@@ -66,8 +66,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.network "private_network", ip: "192.168.50.4", virtualbox__intnet: true
 
         require 'yaml'
-        settings = YAML.load_file 'configuration/hieradata/cvMaker.yaml'
-        config.vm.synced_folder settings['myExamples'], "/myExamples", create: true
+        # You can also use relative path but you'll lose the ability to start the vagrant from wherever path you are with the vagrant folder
+        share = YAML.load_file '/home/nicko/GitHub/vagrantLab/configuration/hieradata/share.yaml' # relative path : 'configuration/hieradata/share.yaml'
+        config.vm.synced_folder share['myTexFiles'], "/myTexFiles", create: true
 
         config.vm.provider :virtualbox do |vb|
             # increase memory to 1GB (base box is set to 480MB)
@@ -88,7 +89,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             puppet.module_path = "modules"
             puppet.manifest_file  = "cvMaker.pp"
             puppet.facter = {
-                "vagrant_box" => true
+                "fqdn" => 'cvmaker.vagrant.box'
             }
         end
     end
