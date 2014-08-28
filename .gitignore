@@ -3,4 +3,4 @@ modules
 .vagrant
 *~
 .idea
-configuration/hieradata/share.yaml
+share.yaml
