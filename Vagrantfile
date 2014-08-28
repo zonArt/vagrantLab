@@ -65,6 +65,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # Define one internal network for inter-VM communication
         config.vm.network "private_network", ip: "192.168.50.4", virtualbox__intnet: true
 
+        require 'yaml'
+        settings = YAML.load_file 'configuration/hieradata/cvMaker.yaml'
+        config.vm.synced_folder settings['myExamples'], "/myExamples", create: true
+
         config.vm.provider :virtualbox do |vb|
             # increase memory to 1GB (base box is set to 480MB)
             vb.customize ["modifyvm", :id, "--memory", 1024, "--cpus", 2]
